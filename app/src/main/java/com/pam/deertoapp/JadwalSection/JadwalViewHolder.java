@@ -1,4 +1,4 @@
-package com.pam.deertoapp;
+package com.pam.deertoapp.JadwalSection;
 
 import android.view.View;
 import android.widget.ImageView;
@@ -6,6 +6,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.pam.deertoapp.R;
 
 public class JadwalViewHolder extends RecyclerView.ViewHolder {
     ImageView ivVehicle;

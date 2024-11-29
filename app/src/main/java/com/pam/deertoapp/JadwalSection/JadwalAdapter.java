@@ -1,33 +1,33 @@
-package com.pam.deertoapp;
+package com.pam.deertoapp.JadwalSection;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.pam.deertoapp.JadwalActivity;
+import com.pam.deertoapp.R;
 
 import java.util.List;
 
 public class JadwalAdapter extends RecyclerView.Adapter<JadwalViewHolder> {
-    Context context;
+    Fragment fragment;
     List<ItemModel> items;
 
-    public JadwalAdapter(Context context, List<ItemModel> items) {
-        this.context = context;
+    public JadwalAdapter(Fragment fragment, List<ItemModel> items) {
+        this.fragment = fragment;
         this.items = items;
     }
 
     @NonNull
     @Override
     public JadwalViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_view, parent, false);
+        View view = LayoutInflater.from(fragment.getContext()).inflate(R.layout.item_view, parent, false);
         return new JadwalViewHolder(view);
     }
 
@@ -36,7 +36,7 @@ public class JadwalAdapter extends RecyclerView.Adapter<JadwalViewHolder> {
         holder.tvTitle.setText(items.get(position).getName());
         holder.tvDate.setText(items.get(position).getDate());
 
-        Glide.with(context)
+        Glide.with(fragment.getContext())
                 .load(items.get(position).getImageUrl())
                 .into(holder.ivVehicle);
 
@@ -45,15 +45,16 @@ public class JadwalAdapter extends RecyclerView.Adapter<JadwalViewHolder> {
             String date = holder.tvDate.getText().toString();
             String imageUrl = items.get(position).getImageUrl();
 
-            Intent intent = new Intent(context, DetailJadwalActivity.class);
+            DetailJadwalFragment detailJadwalFragment = new DetailJadwalFragment();
             Bundle bundle = new Bundle();
             bundle.putString("title", title);
             bundle.putString("date", date);
             bundle.putString("imageUrl", imageUrl);
-            intent.putExtras(bundle);
+            detailJadwalFragment.setArguments(bundle);
 
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            context.startActivity(intent);
+            if (fragment.getActivity() instanceof JadwalActivity) {
+                ((JadwalActivity) fragment.getActivity()).replaceFragment(detailJadwalFragment);
+            }
         });
     }
 
