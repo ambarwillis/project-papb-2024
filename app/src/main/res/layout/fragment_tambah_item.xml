@@ -57,13 +57,14 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Harga Pembukaan: " />
+            android:text="Link Gambar: " />
 
         <EditText
-            android:id="@+id/etBukaHarga"
+            android:id="@+id/etLinkGambar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Harga Buka" />
+            android:text="https://api-pam.portoku.my.id/pam/unknown.png"
+            android:hint="Gambar" />
     </LinearLayout>
 
     <Button

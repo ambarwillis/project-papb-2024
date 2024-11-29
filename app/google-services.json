@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "863906071044",
+    "project_id": "deertoapp-aa1e7",
+    "storage_bucket": "deertoapp-aa1e7.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:863906071044:android:5fa57898304bc25461ab51",
+        "android_client_info": {
+          "package_name": "com.pam.deertoapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCmDZLVX3NuZJwoLg3OLcVwLj9TjAHcDbM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

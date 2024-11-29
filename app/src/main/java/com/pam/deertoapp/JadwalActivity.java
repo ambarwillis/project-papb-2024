@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.pam.deertoapp.JadwalSection.JadwalFragment;
-import com.pam.deertoapp.R;
 
 public class JadwalActivity extends AppCompatActivity {
 
