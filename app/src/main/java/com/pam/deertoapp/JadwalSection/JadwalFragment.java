@@ -1,7 +1,6 @@
 package com.pam.deertoapp.JadwalSection;
 
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -30,7 +29,6 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class JadwalFragment extends Fragment {
-    ItemDao itemDao;
     List<ItemModel> items;
     RecyclerView recyclerView;
     JadwalAdapter adapter;
@@ -59,21 +57,9 @@ public class JadwalFragment extends Fragment {
             }
         });
 
-        ItemDatabase database = ItemDatabase.getInstance(getActivity());
-        itemDao = database.itemDao();
-
         executorService = Executors.newSingleThreadExecutor();
+        executorService.execute(this::fetchApi);
 
-        executorService.execute(() -> {
-            List<ItemModel> items = itemDao.getAllItems();
-            getActivity().runOnUiThread(() -> {
-                if (items.isEmpty()) {
-                    fetchApi();
-                } else {
-                    loadItemsFromDatabase();
-                }
-            });
-        });
         return view;
     }
 
@@ -90,37 +76,27 @@ public class JadwalFragment extends Fragment {
             @Override
             public void onResponse(Call<List<ItemModel>> call, Response<List<ItemModel>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    List<ItemModel> fetchedItems = response.body();
+                    items.clear();
+                    items.addAll(response.body());
 
-                    executorService.execute(() -> {
-                        itemDao.deleteAllItems();
-                        itemDao.insert(fetchedItems.toArray(new ItemModel[0]));
-
-                        loadItemsFromDatabase();
-                    });
+                    getActivity().runOnUiThread(() -> adapter.notifyDataSetChanged());
                 } else {
-                    getActivity().runOnUiThread(() ->
-                            Toast.makeText(getActivity(), "Gagal mengambil data", Toast.LENGTH_SHORT).show());
+                    getActivity().runOnUiThread(() -> Toast.makeText(getActivity(), "Gagal mengambil data", Toast.LENGTH_SHORT).show());
                 }
             }
 
             @Override
             public void onFailure(Call<List<ItemModel>> call, Throwable t) {
-                getActivity().runOnUiThread(() ->
-                        Toast.makeText(getActivity(), "Error: " + t.getMessage(), Toast.LENGTH_LONG).show());
+                getActivity().runOnUiThread(() -> Toast.makeText(getActivity(), "Error: " + t.getMessage(), Toast.LENGTH_LONG).show());
             }
         });
     }
 
-    private void loadItemsFromDatabase() {
-        executorService.execute(() -> {
-            List<ItemModel> localItems = itemDao.getAllItems();
-            getActivity().runOnUiThread(() -> {
-                items.clear();
-                items.addAll(localItems);
-                adapter.notifyDataSetChanged();
-            });
-        });
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (executorService != null && !executorService.isShutdown()) {
+            executorService.shutdown();
+        }
     }
-
 }

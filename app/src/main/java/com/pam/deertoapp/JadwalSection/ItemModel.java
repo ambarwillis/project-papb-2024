@@ -1,29 +1,14 @@
 package com.pam.deertoapp.JadwalSection;
 
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
-
-@Entity(tableName = "item_table")
 public class ItemModel {
-    @PrimaryKey(autoGenerate = true)
-    private int id;
-
-    private String name;
-    private String date;
-    private String imageUrl;
+    String name;
+    String date;
+    String imageUrl;
 
     public ItemModel(String name, String date, String imageUrl) {
         this.name = name;
         this.date = date;
         this.imageUrl = imageUrl;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -50,3 +35,4 @@ public class ItemModel {
         this.imageUrl = imageUrl;
     }
 }
+
