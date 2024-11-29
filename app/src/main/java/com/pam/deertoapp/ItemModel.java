@@ -3,12 +3,12 @@ package com.pam.deertoapp;
 public class ItemModel {
     String name;
     String date;
-    int Image;
+    String imageUrl;
 
-    public ItemModel(String name, String date, int image) {
+    public ItemModel(String name, String date, String imageUrl) {
         this.name = name;
         this.date = date;
-        Image = image;
+        this.imageUrl = imageUrl;
     }
 
     public String getName() {
@@ -27,11 +27,12 @@ public class ItemModel {
         this.date = date;
     }
 
-    public int getImage() {
-        return Image;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setImage(int image) {
-        Image = image;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }
+
